@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="vespolina_order.order_manager.class">Vespolina\OrderBundle\Document\OrderManager</parameter>
+        <parameter key="vespolina_order.model.order.class">Vespolina\OrderBundle\Document\Order</parameter>
+        <parameter key="vespolina_order.model.order_identifier_set.class">Vespolina\OrderBundle\Document\OrderIdentifierSet</parameter>
+    </parameters>
+
+    <services>
+        <service id="vespolina_order.order_manager" class="%vespolina_order.order_manager.class%">
+            <argument type="service" id="service_container" />
+        </service>
+        <service id="vespolina.order_manager" alias="vespolina_order.order_manager" />
+    </services>
+</container>

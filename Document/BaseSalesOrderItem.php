@@ -7,11 +7,11 @@
  */
 namespace Vespolina\OrderBundle\Document;
 
-use Vespolina\OrderBundle\Model\OrderDocument as AbstractOrderDocument;
+use Vespolina\OrderBundle\Model\SalesOrderItem as AbstractSalesOrderItem;
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
  */
-abstract class BaseOrderDocument extends AbstractOrderDocument
+abstract class BaseSalesOrderItem extends AbstractSalesOrderItem
 {
-    protected $id;
+
 }

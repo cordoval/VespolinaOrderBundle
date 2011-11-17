@@ -3,8 +3,7 @@
 namespace Vespolina\OrderBundle\Tests\Service;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Vespolina\OrderBundle\Model\OrderDocument;
-use Vespolina\DocumentBundle\Model\DocumentConfiguration;
+use Vespolina\OrderBundle\Model\SalesOrderManager;
 
 class OrderDocumentCreateTest extends WebTestCase
 {
@@ -28,37 +27,33 @@ class OrderDocumentCreateTest extends WebTestCase
     /**
      * @covers Vespolina\OrderBundle\Service\OrderService::create
      */
-    public function testOrderDocumentCreate()
+    public function testSalesOrderCreate()
     {
-        $orderService = $this->getKernel()->getContainer()->get('vespolina.order_document');
 
-        $orderDocumentConfiguration = $orderService->createDocumentConfiguration('generic_sales_order');
-        $orderDocumentConfiguration->setName('sales_order_third_party');
-        $orderDocumentConfiguration->setBaseClass('Vespolina\OrderBundle\Document\OrderDocument');
-        $orderDocumentConfiguration->setItemBaseClass('Vespolina\OrderBundle\Document\OrderDocumentItem');
+        //$salesOrderService = $this->getKernel()->getContainer()->get('vespolina.order_manager');
+        $salesOrderManager = new SalesOrderManager();
 
-        
-        $orderDocument = $orderService->createDocument($orderDocumentConfiguration);
 
-        $orderDocumentItem1 = $orderService->createItem($orderDocument, $orderDocumentConfiguration);
+        $salesOrder = $salesOrderManager->create();
+        $salesOrderItem1 = $salesOrderManager->createItem($salesOrder);
 
         $productA = $this->getMockForAbstractClass('Vespolina\ProductBundle\Model\Product');
         $productB = $this->getMockForAbstractClass('Vespolina\ProductBundle\Model\Product');
 
-        $orderDocumentItem1->setProduct($productA);
-        $orderDocumentItem1->setOrderedQuantity(10);
+        $salesOrderItem1->setProduct($productA);
+        $salesOrderItem1->setOrderedQuantity(10);
 
-        $this->assertEquals(count($orderDocument->getItems()), 1);
-        $this->assertEquals(($orderDocumentItem1->getOrderedQuantity()), 10);
+        $this->assertEquals(count($salesOrder->getItems()), 1);
+        $this->assertEquals(($salesOrderItem1->getOrderedQuantity()), 10);
 
-        $orderDocumentItem2 = $orderService->createItem($orderDocument, $orderDocumentConfiguration);
-        $orderDocumentItem2->setProduct($productB);
-        $orderDocumentItem2->setOrderedQuantity(5);
+        $salesOrderItem2 = $salesOrderManager->createItem($salesOrder);
+        $salesOrderItem2->setProduct($productB);
+        $salesOrderItem2->setOrderedQuantity(5);
 
-        $this->assertEquals(count($orderDocument->getItems()), 2);
-        $this->assertEquals(($orderDocumentItem2->getOrderedQuantity()), 5);
+        $this->assertEquals(count($salesOrder->getItems()), 2);
+        $this->assertEquals(($salesOrderItem2->getOrderedQuantity()), 5);
 
-        $orderDocument->setPaymentType('COD');  //Cash On delivery
-        $orderService->saveDocument($orderDocument);
+        $salesOrder->setPaymentType('COD');  //Cash On delivery
+        $salesOrderManager->save($salesOrder);
     }
 }

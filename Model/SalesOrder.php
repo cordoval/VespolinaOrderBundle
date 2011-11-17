@@ -2,51 +2,56 @@
 /**
  * (c) Vespolina Project http://www.vespolina-project.org
  *
- * (c) Daniel Kucharski <daniel@xerias.be>
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
 
 namespace Vespolina\OrderBundle\Model;
 
-use Vespolina\DocumentBundle\Model\Document;
-use Vespolina\OrderBundle\Model\OrderDocumentInterface;
-use Vespolina\PartnerBundle\Model\PartnerRole;
-use Vespolina\PricingBundle\Model\PricingElementContainer;
+use Vespolina\OrderBundle\Model\SalesOrderInterface;
 use Vespolina\PricingBundle\Model\PricingSetInterface;
 
-abstract class OrderDocument extends Document implements OrderDocumentInterface
+/**
+ * @author Daniel Kucharski <daniel@xerias.be>
+ */
+abstract class SalesOrder implements SalesOrderInterface
 {
     protected $customer = null;
-    protected $documentIdentifications = null;
     protected $paymentType;
     protected $pricingSet = null;
+    protected $items;
 
-    public function __construct($documentConfigurationName)
+    public function __construct()
     {
-        parent::__construct($documentConfigurationName);
 
         $this->documentIdentifications = array();
     }
+
+    public function addItem(SalesOrderItemInterface $item) {
+
+        $this->items[] = $item;
+    }
+
 
     /**
      * Get the (primary) customer for this order
      */
     public function getCustomer()
     {
-        if (!$this->customer) {
-            if ($partners = $this->getPartners(new PartnerRole('customer'))) {
-                $this->customer = $partners[0];
-            }
-        }
+
         return $this->customer;
     }
 
+    public function getItems()
+    {
+
+        return $this->items;
+    }
 
     public function getPaymentType()
     {
 
-        $this->paymentType;
+        return $this->paymentType;
     }
 
     /**
@@ -54,6 +59,7 @@ abstract class OrderDocument extends Document implements OrderDocumentInterface
      */
     public function getPricingSet()
     {
+
         return $this->pricingSet;
     }
 
@@ -75,6 +81,7 @@ abstract class OrderDocument extends Document implements OrderDocumentInterface
      */
     public function getPricingSets()
     {
+
         //A typical order has only one pricing set
         return array($this->pricingSet);
     }
@@ -84,6 +91,7 @@ abstract class OrderDocument extends Document implements OrderDocumentInterface
      */
     public function addPricingSet(PricingSetInterface $pricingSet)
     {
+
         // A typical order has only one pricing set
         $this->setPricingSet($pricingSet);
     }
