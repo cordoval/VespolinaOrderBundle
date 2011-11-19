@@ -8,7 +8,9 @@
 
 namespace Vespolina\OrderBundle\Model;
 
+use Vespolina\OrderBundle\Model\PaymentAgreementInterface;
 use Vespolina\OrderBundle\Model\SalesOrderInterface;
+use Vespolina\OrderBundle\Model\SalesOrderItemInterface;
 use Vespolina\PricingBundle\Model\PricingSetInterface;
 
 /**
@@ -16,10 +18,14 @@ use Vespolina\PricingBundle\Model\PricingSetInterface;
  */
 abstract class SalesOrder implements SalesOrderInterface
 {
-    protected $customer = null;
-    protected $paymentType;
-    protected $pricingSet = null;
+    protected $createdAt;
+    protected $customer;
     protected $items;
+    protected $orderDate;
+    protected $orderStatus;
+    protected $paymentAgreement;
+    protected $pricingSet;
+    protected $updatedAt;
 
     public function __construct()
     {
@@ -48,10 +54,22 @@ abstract class SalesOrder implements SalesOrderInterface
         return $this->items;
     }
 
-    public function getPaymentType()
+    public function getOrderDate()
     {
 
-        return $this->paymentType;
+        return $this->orderDate;
+    }
+
+    public function getOrderStatus()
+    {
+
+        return $this->orderDate;
+    }
+
+    public function getPaymentAgreement()
+    {
+
+        return $this->paymentAgreement;
     }
 
     /**
@@ -63,10 +81,43 @@ abstract class SalesOrder implements SalesOrderInterface
         return $this->pricingSet;
     }
 
-    public function setPaymentType($paymentType)
+    public function incrementCreatedAt()
+    {
+        if (null === $this->createdAt) {
+            $this->createdAt = new \DateTime();
+        }
+        $this->updatedAt = new \DateTime();
+    }
+
+    public function incrementUpdatedAt()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
+    
+    public function setCustomer($customer)
     {
 
-        $this->paymentType = $paymentType;
+        $this->customer = $customer;
+    }
+
+    public function setOrderDate($orderDate)
+    {
+
+        $this->orderDate = $orderDate;
+    }
+
+    public function setOrderStatus($orderStatus)
+    {
+
+        $this->orderStatus = $orderStatus;
+    }
+    
+
+    public function setPaymentAgreement(PaymentAgreementInterface $paymentAgreement)
+    {
+
+        $this->paymentAgreement = $paymentAgreement;
     }
     /**
      * @inheritdoc

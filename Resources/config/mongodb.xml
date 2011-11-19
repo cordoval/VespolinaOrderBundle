@@ -5,15 +5,15 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="vespolina_order.order_manager.class">Vespolina\OrderBundle\Document\OrderManager</parameter>
-        <parameter key="vespolina_order.model.order.class">Vespolina\OrderBundle\Document\Order</parameter>
-        <parameter key="vespolina_order.model.order_identifier_set.class">Vespolina\OrderBundle\Document\OrderIdentifierSet</parameter>
+        <parameter key="vespolina_sales_order.sales_order_manager.class">Vespolina\OrderBundle\Document\SalesOrderManager</parameter>
+        <parameter key="vespolina_sales_order.model.sales_order.class">Vespolina\OrderBundle\Document\SalesOrder</parameter>
+        <parameter key="vespolina_sales_order.model.sales_order_identifier_set.class">Vespolina\OrderBundle\Document\OrderIdentifierSet</parameter>
     </parameters>
 
     <services>
-        <service id="vespolina_order.order_manager" class="%vespolina_order.order_manager.class%">
+        <service id="vespolina_sales_order.sales_order_manager" class="%vespolina_sales_order.sales_order_manager.class%">
             <argument type="service" id="service_container" />
         </service>
-        <service id="vespolina.order_manager" alias="vespolina_order.order_manager" />
+        <service id="vespolina_sales_order.order_manager" alias="vespolina_sales_order.sales_order_manager" />
     </services>
 </container>

@@ -16,9 +16,22 @@ use Vespolina\OrderBundle\Model\SalesOrderItemInterface;
  */
 interface SalesOrderInterface extends PriceableInterface
 {
-    public function addItem(SalesOrderItemInterface $item);
 
-    public function getCustomer();
+    function addItem(SalesOrderItemInterface $item);
 
-    public function getItems();
+    function getCustomer();
+
+    function getItems();
+
+    function getOrderDate();
+
+    function getPaymentAgreement();
+
+    function setCustomer($customer);
+
+    function setOrderDate($orderDate);
+
+    function setOrderStatus($orderStatus);
+
+    function setPaymentAgreement(PaymentAgreementInterface $paymentAgreement);
 }

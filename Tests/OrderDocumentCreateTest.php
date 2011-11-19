@@ -4,6 +4,8 @@ namespace Vespolina\OrderBundle\Tests\Service;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Vespolina\OrderBundle\Model\SalesOrderManager;
+use Vespolina\OrderBundle\Document\PaymentAgreement;
+
 
 class OrderDocumentCreateTest extends WebTestCase
 {
@@ -30,11 +32,14 @@ class OrderDocumentCreateTest extends WebTestCase
     public function testSalesOrderCreate()
     {
 
-        //$salesOrderService = $this->getKernel()->getContainer()->get('vespolina.order_manager');
-        $salesOrderManager = new SalesOrderManager();
+        $salesOrderManager = $this->getKernel()->getContainer()->get('vespolina_sales_order.sales_order_manager');
 
 
-        $salesOrder = $salesOrderManager->create();
+        $salesOrder = $salesOrderManager->createSalesOrder();
+
+        $salesOrder->setOrderDate(new \DateTime());
+        $salesOrder->setOrderStatus('awaiting_payment');
+
         $salesOrderItem1 = $salesOrderManager->createItem($salesOrder);
 
         $productA = $this->getMockForAbstractClass('Vespolina\ProductBundle\Model\Product');
@@ -53,7 +58,11 @@ class OrderDocumentCreateTest extends WebTestCase
         $this->assertEquals(count($salesOrder->getItems()), 2);
         $this->assertEquals(($salesOrderItem2->getOrderedQuantity()), 5);
 
-        $salesOrder->setPaymentType('COD');  //Cash On delivery
-        $salesOrderManager->save($salesOrder);
+        //Payment
+        $paymentAgreement = new PaymentAgreement();
+        $paymentAgreement->setPaymentType('COD');
+
+        $salesOrder->setPaymentAgreement($paymentAgreement);
+        $salesOrderManager->updateSalesOrder($salesOrder);
     }
 }

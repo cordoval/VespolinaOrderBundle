@@ -9,9 +9,8 @@ namespace Vespolina\OrderBundle\Model;
 
 use Symfony\Component\DependencyInjection\Container;
 
-use Vespolina\OrderBundle\Document\SalesOrder;
-use Vespolina\OrderBundle\Document\SalesOrderItem;
 use Vespolina\OrderBundle\Model\SalesOrderInterface;
+use Vespolina\OrderBundle\Model\SalesOrderItemInterface;
 use Vespolina\OrderBundle\Model\SalesOrderManagerInterface;
 
 /**
@@ -19,23 +18,20 @@ use Vespolina\OrderBundle\Model\SalesOrderManagerInterface;
  */
 class SalesOrderManager {
 
-    public function create($orderType = 'default')
-    {
+    protected $container;
 
-        return new SalesOrder();
+    public function __construct(Container $container) {
 
+        $this->container = $container;
     }
 
-    public function createItem(SalesOrderInterface $salesOrder) {
 
-       $salesOrderItem = new SalesOrderItem();
 
-       $salesOrder->addItem($salesOrderItem);
+    public function init(SalesOrderInterface $salesOrder) {
         
-       return $salesOrderItem;
     }
 
-    public function save(SalesOrderInterface $salesOrder) {
+    public function initItem(SalesOrderItemInterface $salesOrder) {
 
     }
 }

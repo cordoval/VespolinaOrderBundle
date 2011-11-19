@@ -17,14 +17,18 @@ use Vespolina\ProductBundle\Model\ProductInterface;
  */
 abstract class SalesOrderItem implements SalesOrderItemInterface
 {
+    protected $createdAt;
+    protected $updatedAt;
     protected $orderedQuantity;
+    protected $pricingSet;
     protected $product;
-
+    
     /**
      * @inheritdoc
      */
     function getOrderedQuantity()
     {
+
         return $this->orderedQuantity;
     }
 
@@ -33,6 +37,7 @@ abstract class SalesOrderItem implements SalesOrderItemInterface
      */
     function getProduct()
     {
+
         return $this->product;
     }
 
