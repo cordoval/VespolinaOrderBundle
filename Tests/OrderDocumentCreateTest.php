@@ -3,8 +3,9 @@
 namespace Vespolina\OrderBundle\Tests\Service;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Vespolina\OrderBundle\Model\OrderDocument;
-use Vespolina\DocumentBundle\Model\DocumentConfiguration;
+use Vespolina\OrderBundle\Model\SalesOrderManager;
+use Vespolina\OrderBundle\Document\PaymentAgreement;
+
 
 class OrderDocumentCreateTest extends WebTestCase
 {
@@ -28,37 +29,45 @@ class OrderDocumentCreateTest extends WebTestCase
     /**
      * @covers Vespolina\OrderBundle\Service\OrderService::create
      */
-    public function testOrderDocumentCreate()
+    public function testSalesOrderCreate()
     {
-        $orderService = $this->getKernel()->getContainer()->get('vespolina.order_document');
 
-        $orderDocumentConfiguration = $orderService->createDocumentConfiguration('generic_sales_order');
-        $orderDocumentConfiguration->setName('sales_order_third_party');
-        $orderDocumentConfiguration->setBaseClass('Vespolina\OrderBundle\Document\OrderDocument');
-        $orderDocumentConfiguration->setItemBaseClass('Vespolina\OrderBundle\Document\OrderDocumentItem');
+        $salesOrderManager = $this->getKernel()->getContainer()->get('vespolina_sales_order.sales_order_manager');
 
-        
-        $orderDocument = $orderService->createDocument($orderDocumentConfiguration);
 
-        $orderDocumentItem1 = $orderService->createItem($orderDocument, $orderDocumentConfiguration);
+        $salesOrder = $salesOrderManager->createSalesOrder();
+
+        $salesOrder->setOrderDate(new \DateTime());
+        $salesOrder->setOrderState('awaiting_payment');
+
+        $salesOrderItem1 = $salesOrderManager->createItem($salesOrder);
 
         $productA = $this->getMockForAbstractClass('Vespolina\ProductBundle\Model\Product');
         $productB = $this->getMockForAbstractClass('Vespolina\ProductBundle\Model\Product');
 
-        $orderDocumentItem1->setProduct($productA);
-        $orderDocumentItem1->setOrderedQuantity(10);
+        $salesOrderItem1->setProduct($productA);
+        $salesOrderItem1->setOrderedQuantity(10);
+        $salesOrderItem1->setCustomerComment('please deliver one with a green print');
+        $salesOrderItem1->setCustomerProductReference('PROMO_2012_T_SHIRT_CUSTOM_COLOR');
+        $salesOrderItem1->setItemState('shipped');
 
-        $this->assertEquals(count($orderDocument->getItems()), 1);
-        $this->assertEquals(($orderDocumentItem1->getOrderedQuantity()), 10);
+        $this->assertEquals(count($salesOrder->getItems()), 1);
+        $this->assertEquals(($salesOrderItem1->getOrderedQuantity()), 10);
 
-        $orderDocumentItem2 = $orderService->createItem($orderDocument, $orderDocumentConfiguration);
-        $orderDocumentItem2->setProduct($productB);
-        $orderDocumentItem2->setOrderedQuantity(5);
+        $salesOrderItem2 = $salesOrderManager->createItem($salesOrder);
+        $salesOrderItem2->setProduct($productB);
+        $salesOrderItem2->setOrderedQuantity(5);
+        $salesOrderItem2->setItemState('shipped');
 
-        $this->assertEquals(count($orderDocument->getItems()), 2);
-        $this->assertEquals(($orderDocumentItem2->getOrderedQuantity()), 5);
+        $this->assertEquals(count($salesOrder->getItems()), 2);
+        $this->assertEquals(($salesOrderItem2->getOrderedQuantity()), 5);
 
-        $orderDocument->setPaymentType('COD');  //Cash On delivery
-        $orderService->saveDocument($orderDocument);
+        //Payment
+        $paymentAgreement = new PaymentAgreement();
+        $paymentAgreement->setPaymentType('COD');
+        $paymentAgreement->setPaymentState('unpaid');
+        
+        $salesOrder->setPaymentAgreement($paymentAgreement);
+        $salesOrderManager->updateSalesOrder($salesOrder);
     }
 }

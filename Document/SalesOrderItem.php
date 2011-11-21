@@ -7,14 +7,11 @@
  */
 namespace Vespolina\OrderBundle\Document;
 
-use Vespolina\OrderBundle\Document\BaseOrderDocument;
+use Vespolina\OrderBundle\Document\BaseSalesOrderItem;
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
  */
-class OrderDocument extends BaseOrderDocument
+class SalesOrderItem extends BaseSalesOrderItem
 {
-    public function __construct($documentConfigurationName)
-    {
-        parent::__construct($documentConfigurationName);
-    }
+
 }
