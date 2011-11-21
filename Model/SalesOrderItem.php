@@ -21,9 +21,11 @@ abstract class SalesOrderItem implements SalesOrderItemInterface
     protected $customerComment;
     protected $customerProductReference;
     protected $itemNumber;
+    protected $itemState;
     protected $orderedQuantity;
     protected $pricingSet;
     protected $product;
+    protected $productName;
     protected $updatedAt;
     
     /**
@@ -52,6 +54,7 @@ abstract class SalesOrderItem implements SalesOrderItemInterface
 
         return $this->customerProductReference;
     }
+
     /**
      * @inheritdoc
      */
@@ -61,6 +64,14 @@ abstract class SalesOrderItem implements SalesOrderItemInterface
         return $this->itemNumber;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getItemState()
+    {
+
+        return $this->itemState;
+    }
 
     /**
      * @inheritdoc
@@ -69,6 +80,15 @@ abstract class SalesOrderItem implements SalesOrderItemInterface
     {
 
         return $this->orderedQuantity;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getPricingSet()
+    {
+
+        return $this->pricingSet;
     }
 
     /**
@@ -83,10 +103,10 @@ abstract class SalesOrderItem implements SalesOrderItemInterface
     /**
      * @inheritdoc
      */
-    public function getPricingSet()
+    public function getProductName()
     {
 
-        return $this->pricingSet;
+        return $this->productName;
     }
     
     /**
@@ -130,6 +150,15 @@ abstract class SalesOrderItem implements SalesOrderItemInterface
     /**
      * @inheritdoc
      */
+    public function setItemState($itemState)
+    {
+
+        $this->itemState = $itemState;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function setOrderedQuantity($orderedQuantity)
     {
         $this->orderedQuantity = $orderedQuantity;
@@ -141,6 +170,14 @@ abstract class SalesOrderItem implements SalesOrderItemInterface
     public function setPricingSet($pricingSet)
     {
         $this->pricingSet = $pricingSet;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setProductName($productName)
+    {
+        $this->productName = $productName;
     }
 
     /**

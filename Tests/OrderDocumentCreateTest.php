@@ -49,6 +49,7 @@ class OrderDocumentCreateTest extends WebTestCase
         $salesOrderItem1->setOrderedQuantity(10);
         $salesOrderItem1->setCustomerComment('please deliver one with a green print');
         $salesOrderItem1->setCustomerProductReference('PROMO_2012_T_SHIRT_CUSTOM_COLOR');
+        $salesOrderItem1->setItemState('shipped');
 
         $this->assertEquals(count($salesOrder->getItems()), 1);
         $this->assertEquals(($salesOrderItem1->getOrderedQuantity()), 10);
@@ -56,6 +57,7 @@ class OrderDocumentCreateTest extends WebTestCase
         $salesOrderItem2 = $salesOrderManager->createItem($salesOrder);
         $salesOrderItem2->setProduct($productB);
         $salesOrderItem2->setOrderedQuantity(5);
+        $salesOrderItem2->setItemState('shipped');
 
         $this->assertEquals(count($salesOrder->getItems()), 2);
         $this->assertEquals(($salesOrderItem2->getOrderedQuantity()), 5);

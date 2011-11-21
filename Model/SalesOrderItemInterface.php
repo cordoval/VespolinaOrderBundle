@@ -43,6 +43,14 @@ interface SalesOrderItemInterface {
     function getItemNumber();
 
     /**
+     * Get item state (eg. "backorder", or "delivered", ...)
+     *
+     * @abstract
+     * @return void
+     */
+    function getItemState();
+
+    /**
      * Get quantity initially ordered
      *
      * @abstract
@@ -58,6 +66,14 @@ interface SalesOrderItemInterface {
      */
     function getProduct();
 
+
+    /**
+     * Get the product name
+     *
+     * @abstract
+     * @return void
+     */
+    function getProductName();
 
     /**
      * Set the customer comment
@@ -84,6 +100,8 @@ interface SalesOrderItemInterface {
      * @return void
      */
     function setItemNumber($itemNumber);
+
+
     /**
      * Set quantity ordered
      * @abstract
@@ -100,4 +118,14 @@ interface SalesOrderItemInterface {
      * @return void
      */
     function setProduct(ProductInterface $product);
+
+    /**
+     * Set the name of the product
+     *
+     * @abstract
+     * @param $productName
+     * @return void
+     *
+     */
+    function setProductName($productName);
 }
