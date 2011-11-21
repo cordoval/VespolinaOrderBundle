@@ -38,7 +38,7 @@ class OrderDocumentCreateTest extends WebTestCase
         $salesOrder = $salesOrderManager->createSalesOrder();
 
         $salesOrder->setOrderDate(new \DateTime());
-        $salesOrder->setOrderStatus('awaiting_payment');
+        $salesOrder->setOrderState('awaiting_payment');
 
         $salesOrderItem1 = $salesOrderManager->createItem($salesOrder);
 
@@ -47,6 +47,8 @@ class OrderDocumentCreateTest extends WebTestCase
 
         $salesOrderItem1->setProduct($productA);
         $salesOrderItem1->setOrderedQuantity(10);
+        $salesOrderItem1->setCustomerComment('please deliver one with a green print');
+        $salesOrderItem1->setCustomerProductReference('PROMO_2012_T_SHIRT_CUSTOM_COLOR');
 
         $this->assertEquals(count($salesOrder->getItems()), 1);
         $this->assertEquals(($salesOrderItem1->getOrderedQuantity()), 10);
@@ -61,7 +63,8 @@ class OrderDocumentCreateTest extends WebTestCase
         //Payment
         $paymentAgreement = new PaymentAgreement();
         $paymentAgreement->setPaymentType('COD');
-
+        $paymentAgreement->setPaymentState('unpaid');
+        
         $salesOrder->setPaymentAgreement($paymentAgreement);
         $salesOrderManager->updateSalesOrder($salesOrder);
     }

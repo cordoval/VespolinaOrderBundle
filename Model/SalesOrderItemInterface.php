@@ -14,15 +14,33 @@ use Vespolina\ProductBundle\Model\ProductInterface;
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
  */
-interface SalesOrderItemInterface
-{
+interface SalesOrderItemInterface {
+
+
     /**
-     * Get the product associated to this order item
+     * Get the customer comment of this item
      *
      * @abstract
-     * @return Vespolina\ProductBundle\ProductInterface
+     * @return void
      */
-    function getProduct();
+    function getCustomerComment();
+
+    /**
+     * The product reference which the customer used for ordering the product
+     * This can be different from the real product SKU
+     *
+     * @abstract
+     * @return void
+     */
+    function getCustomerProductReference();
+
+    /**
+     * Get item number
+     *
+     * @abstract
+     * @return int
+     */
+    function getItemNumber();
 
     /**
      * Get quantity initially ordered
@@ -33,14 +51,39 @@ interface SalesOrderItemInterface
     function getOrderedQuantity();
 
     /**
-     * Set product which needs to be associated to this order item
+     * Get the product associated to this order item
      *
      * @abstract
-     * @param \Vespolina\ProductBundle\Model\ProductInterface $product
+     * @return Vespolina\ProductBundle\ProductInterface
+     */
+    function getProduct();
+
+
+    /**
+     * Set the customer comment
+     *
+     * @abstract
      * @return void
      */
-    function setProduct(ProductInterface $product);
+    function setCustomerComment($customerComment);
 
+    /**
+     * Set the customer product reference
+     *
+     * @abstract
+     * @param $customerProductReference
+     * @return void
+     */
+    function setCustomerProductReference($customerProductReference);
+
+    /**
+     * Set the item number
+     *
+     * @abstract
+     * @param $itemNumber
+     * @return void
+     */
+    function setItemNumber($itemNumber);
     /**
      * Set quantity ordered
      * @abstract
@@ -48,4 +91,13 @@ interface SalesOrderItemInterface
      * @return void
      */
     function setOrderedQuantity($quantity);
+    
+    /**
+     * Set product which needs to be associated to this order item
+     *
+     * @abstract
+     * @param \Vespolina\ProductBundle\Model\ProductInterface $product
+     * @return void
+     */
+    function setProduct(ProductInterface $product);
 }

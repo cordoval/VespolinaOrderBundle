@@ -17,6 +17,7 @@ use Vespolina\OrderBundle\Model\PaymentAgreementInterface;
 abstract class PaymentAgreement implements PaymentAgreementInterface
 {
     protected $paymentType;
+    protected $paymentState;
 
     /**
      * @inheritdoc
@@ -24,9 +25,25 @@ abstract class PaymentAgreement implements PaymentAgreementInterface
     function getPaymentType()
     {
 
-        return $this->paymentTYpe;
+        return $this->paymentType;
     }
 
+    /**
+     * @inheritdoc
+     */
+    function getPaymentState()
+    {
+
+        return $this->paymentState;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    function setPaymentState($paymentState)
+    {
+        $this->paymentState = $paymentState;
+    }
 
     /**
      * @inheritdoc

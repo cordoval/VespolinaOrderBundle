@@ -16,7 +16,18 @@ use Vespolina\ProductBundle\Model\ProductInterface;
  */
 interface PaymentAgreementInterface
 {
+
+    /**
+     * Payment type such as "paypal", "credit card", ...
+     *
+     * @abstract
+     * @return string
+     */
     function getPaymentType();
 
+    function getPaymentState();
+
     function setPaymentType($paymentType);
+
+    function setPaymentState($paymentState);
 }

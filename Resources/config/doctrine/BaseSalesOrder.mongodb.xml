@@ -8,7 +8,7 @@
 
         <field name="createdAt" fieldName="createdAt" type="date" />
         <field name="orderDate" fieldName="orderDate" type="date" />
-        <field name="orderStatus" fieldName="orderStatus" type="string" />
+        <field name="orderState" fieldName="orderState" type="string" />
         <field name="type" fieldName="type" type="string" />
         <field name="updatedAt" fieldName="updatedAt" type="date" />
 

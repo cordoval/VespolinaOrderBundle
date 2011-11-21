@@ -7,6 +7,7 @@
     <mapped-superclass name="Vespolina\OrderBundle\Document\BasePaymentAgreement">
 
         <field name="paymentType" fieldName="paymentType" type="string" />
+        <field name="paymentState" fieldName="paymentState" type="string" />
 
     </mapped-superclass>
 

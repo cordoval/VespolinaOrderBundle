@@ -18,15 +18,54 @@ use Vespolina\ProductBundle\Model\ProductInterface;
 abstract class SalesOrderItem implements SalesOrderItemInterface
 {
     protected $createdAt;
-    protected $updatedAt;
+    protected $customerComment;
+    protected $customerProductReference;
+    protected $itemNumber;
     protected $orderedQuantity;
     protected $pricingSet;
     protected $product;
+    protected $updatedAt;
     
     /**
      * @inheritdoc
      */
-    function getOrderedQuantity()
+    public function getCreatedAt()
+    {
+
+        return $this->createdAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCustomerComment()
+    {
+
+        return $this->customerComment;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCustomerProductReference()
+    {
+
+        return $this->customerProductReference;
+    }
+    /**
+     * @inheritdoc
+     */
+    public function getItemNumber()
+    {
+
+        return $this->itemNumber;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getOrderedQuantity()
     {
 
         return $this->orderedQuantity;
@@ -35,7 +74,7 @@ abstract class SalesOrderItem implements SalesOrderItemInterface
     /**
      * @inheritdoc
      */
-    function getProduct()
+    public function getProduct()
     {
 
         return $this->product;
@@ -44,7 +83,54 @@ abstract class SalesOrderItem implements SalesOrderItemInterface
     /**
      * @inheritdoc
      */
-    function setOrderedQuantity($orderedQuantity)
+    public function getPricingSet()
+    {
+
+        return $this->pricingSet;
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function getUpdatedAt()
+    {
+
+        return $this->updatedAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setCustomerComment($customerComment)
+    {
+
+        $this->customerComment = $customerComment;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function setCustomerProductReference($customerProductReference)
+    {
+
+        $this->customerProductReference = $customerProductReference;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function setItemNumber($itemNumber)
+    {
+
+        $this->itemNumber = $itemNumber;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setOrderedQuantity($orderedQuantity)
     {
         $this->orderedQuantity = $orderedQuantity;
     }
@@ -52,7 +138,15 @@ abstract class SalesOrderItem implements SalesOrderItemInterface
     /**
      * @inheritdoc
      */
-    function setProduct(ProductInterface $product)
+    public function setPricingSet($pricingSet)
+    {
+        $this->pricingSet = $pricingSet;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setProduct(ProductInterface $product)
     {
         $this->product = $product;
     }
