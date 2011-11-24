@@ -4,11 +4,6 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <mapped-superclass name="Vespolina\OrderBundle\Document\BasePaymentAgreement">
-
-        <field name="type" fieldName="type" type="string" />
-        <field name="state" fieldName="state" type="string" />
-
-    </mapped-superclass>
-
+    <embedded-document name="Vespolina\OrderBundle\Document\FulfillmentAgreement">
+    </embedded-document>
 </doctrine-mongo-mapping>
