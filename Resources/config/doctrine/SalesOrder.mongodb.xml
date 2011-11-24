@@ -10,10 +10,14 @@
                     field="items"
                     targetDocument="Vespolina\OrderBundle\Document\SalesOrderItem"
                     strategy="set"/>
-        <embed-one fieldName="paymentAgreement"
-                    field="paymentAgreement"
-                    targetDocument="Vespolina\OrderBundle\Document\PaymentAgreement"
+        <embed-one fieldName="fulfillmentAgreement"
+                    field="fulfillmentAgreement"
+                    targetDocument="Vespolina\OrderBundle\Document\FulfillmentAgreement"
                    />
+        <embed-one fieldName="paymentAgreement"
+                            field="paymentAgreement"
+                            targetDocument="Vespolina\OrderBundle\Document\PaymentAgreement"
+                           />
 
     </document>
 

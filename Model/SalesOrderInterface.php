@@ -8,7 +8,11 @@
  
 namespace Vespolina\OrderBundle\Model;
 
+use Vespolina\CustomerBundle\Model\CustomerInterface;
+use Vespolina\OrderBundle\Model\FulfillmentAgreementInterface;
+use Vespolina\OrderBundle\Model\PaymentAgreementInterface;
 use Vespolina\OrderBundle\Model\SalesOrderItemInterface;
+
 
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
@@ -83,6 +87,14 @@ interface SalesOrderInterface
 
 
     /**
+     * Name of the sales channel (eg. webshop1-blabla, reseller-network1)
+     *
+     * @abstract
+     * @return void
+     */
+    function getSalesChannel();
+
+    /**
      * Get the date on which this sales order was lastly updated
      *
      * @abstract
@@ -97,7 +109,7 @@ interface SalesOrderInterface
      * @param $customer
      * @return void
      */
-    function setCustomer($customer);
+    function setCustomer(CustomerInterface $customer);
 
     /**
      * Set a customer comment
@@ -125,6 +137,15 @@ interface SalesOrderInterface
      * @return void
      */
     function setOrderState($orderState);
+
+    /**
+     * Set the way it was agreed upon to fulfill this sales order
+     *
+     * @abstract
+     * @param FulfillmentAgreementInterface $fulfillmentAgreement
+     * @return void
+     */
+    function setFulfillmentAgreement(FulfillmentAgreementInterface $fulfillmentAgreement);
 
     /*
      * Set the payment agreement

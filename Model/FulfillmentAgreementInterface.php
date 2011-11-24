@@ -8,16 +8,24 @@
 
 namespace Vespolina\OrderBundle\Model;
 
-use Vespolina\ProductBundle\Model\ProductInterface;
 
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
  */
-interface PaymentAgreementInterface
+interface FulfillmentAgreementInterface
 {
 
     /**
-     * Payment type such as "paypal", "credit card", ...
+     * Returns the agreed service level (eg. if fulfillment type = 'shipment', a service level
+     * could be "delivery_in_24h"
+     *
+     * @abstract
+     * @return void
+     */
+    function getServiceLevel();
+
+    /**
+     * Fulfillment type such as "shipment", "customer comes get it", ...
      *
      * @abstract
      * @return string
@@ -26,7 +34,10 @@ interface PaymentAgreementInterface
 
     function getState();
 
-    function setType($type);
+    function setServiceLevel($serviceLevel);
 
     function setState($state);
+
+    function setType($type);
+
 }

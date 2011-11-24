@@ -4,10 +4,12 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <mapped-superclass name="Vespolina\OrderBundle\Document\BasePaymentAgreement">
+    <mapped-superclass name="Vespolina\OrderBundle\Document\BaseFulfillmentAgreement">
 
         <field name="type" fieldName="type" type="string" />
         <field name="state" fieldName="state" type="string" />
+        <field name="serviceLevel" fieldName="serviceLevel" type="string" />
+
 
     </mapped-superclass>
 

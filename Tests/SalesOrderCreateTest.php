@@ -4,6 +4,7 @@ namespace Vespolina\OrderBundle\Tests\Service;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Vespolina\OrderBundle\Model\SalesOrderManager;
+use Vespolina\OrderBundle\Document\FulfillmentAgreement;
 use Vespolina\OrderBundle\Document\PaymentAgreement;
 
 
@@ -37,9 +38,28 @@ class OrderDocumentCreateTest extends WebTestCase
 
         $salesOrder = $salesOrderManager->createSalesOrder();
 
+        //Header data
+        $salesOrder->setCustomer($this->createCustomer());
         $salesOrder->setOrderDate(new \DateTime());
         $salesOrder->setOrderState('awaiting_payment');
+        $salesOrder->setSalesChannel('webshop-foo.com');
 
+
+        $paymentAgreement = new PaymentAgreement();
+        $paymentAgreement->setType('COD');
+        $paymentAgreement->setState('unpaid');
+
+        $salesOrder->setPaymentAgreement($paymentAgreement);
+
+
+        $fulfillmentAgreement = new FulfillmentAgreement();
+        $fulfillmentAgreement->setType('shipment');
+        $fulfillmentAgreement->setState('warehouse notice');
+        $fulfillmentAgreement->setServiceLevel('express_delivery');
+
+        $salesOrder->setFulfillmentAgreement($fulfillmentAgreement);
+
+        //Item data
         $salesOrderItem1 = $salesOrderManager->createItem($salesOrder);
 
         $productA = $this->getMockForAbstractClass('Vespolina\ProductBundle\Model\Product');
@@ -62,12 +82,18 @@ class OrderDocumentCreateTest extends WebTestCase
         $this->assertEquals(count($salesOrder->getItems()), 2);
         $this->assertEquals(($salesOrderItem2->getOrderedQuantity()), 5);
 
-        //Payment
-        $paymentAgreement = new PaymentAgreement();
-        $paymentAgreement->setPaymentType('COD');
-        $paymentAgreement->setPaymentState('unpaid');
-        
-        $salesOrder->setPaymentAgreement($paymentAgreement);
+
         $salesOrderManager->updateSalesOrder($salesOrder);
+    }
+
+    protected function createCustomer()
+    {
+
+        $customerManager = $this->getKernel()->getContainer()->get('vespolina_customer.customer_manager');
+        $customer = $customerManager->createCustomer();
+        $customer->setName('Enron');
+        $customer->setCustomerId('ABC10000');
+
+        return $customer;
     }
 }

@@ -8,6 +8,8 @@
 
 namespace Vespolina\OrderBundle\Model;
 
+use Vespolina\CustomerBundle\Model\CustomerInterface;
+use Vespolina\OrderBundle\Model\FulfillmentAgreementInterface;
 use Vespolina\OrderBundle\Model\PaymentAgreementInterface;
 use Vespolina\OrderBundle\Model\SalesOrderInterface;
 use Vespolina\OrderBundle\Model\SalesOrderItemInterface;
@@ -20,12 +22,15 @@ abstract class SalesOrder implements SalesOrderInterface
 {
     protected $createdAt;
     protected $customer;
+    protected $customerId;
     protected $customerComment;
+    protected $fulfillmentAgreement;
     protected $items;
     protected $orderDate;
     protected $orderState;
     protected $paymentAgreement;
     protected $pricingSet;
+    protected $salesChannel;
     protected $updatedAt;
 
     public function __construct()
@@ -128,6 +133,14 @@ abstract class SalesOrder implements SalesOrderInterface
         return $this->updatedAt;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getSalesChannel()
+    {
+
+        return $this->salesChannel;
+    }
 
     /**
      * @inheritdoc
@@ -152,10 +165,15 @@ abstract class SalesOrder implements SalesOrderInterface
     /**
      * @inheritdoc
      */
-    public function setCustomer($customer)
+    public function setCustomer(CustomerInterface $customer)
     {
 
         $this->customer = $customer;
+        if ($customer) {
+
+            $this->customerId = $customer->getCustomerId();
+        }
+
     }
 
 
@@ -168,11 +186,22 @@ abstract class SalesOrder implements SalesOrderInterface
         $this->customerComment = $customerComment;
     }
 
-
+    /**
+     * @inheritdoc
+     */
     public function setItemNumber($itemNumber)
     {
 
         $this->itemNumber = $itemNumber;
+    }
+
+     /**
+     * @inheritdoc
+     */
+    public function setFulfillmentAgreement(FulfillmentAgreementInterface $fulfillmentAgreement)
+    {
+
+        $this->fulfillmentAgreement = $fulfillmentAgreement;
     }
 
 
@@ -212,6 +241,15 @@ abstract class SalesOrder implements SalesOrderInterface
     {
 
         $this->pricingSet = $pricingSet;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setSalesChannel($salesChannel)
+    {
+
+        $this->salesChannel = $salesChannel;
     }
 
 }

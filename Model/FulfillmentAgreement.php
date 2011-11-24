@@ -9,15 +9,34 @@
 
 namespace Vespolina\OrderBundle\Model;
 
-use Vespolina\OrderBundle\Model\PaymentAgreementInterface;
+use Vespolina\OrderBundle\Model\FulfillmentAgreementInterface;
 
 /**
  * @author Daniel Kucharski <daniel@xerias.be>
  */
-abstract class PaymentAgreement implements PaymentAgreementInterface
+abstract class FulfillmentAgreement implements FulfillmentAgreementInterface
 {
     protected $type;
+    protected $serviceLevel;
     protected $state;
+
+    /**
+     * @inheritdoc
+     */
+    function getState()
+    {
+
+        return $this->state;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    function getServiceLevel()
+    {
+
+        return $this->serviceLevel;
+    }
 
     /**
      * @inheritdoc
@@ -31,10 +50,10 @@ abstract class PaymentAgreement implements PaymentAgreementInterface
     /**
      * @inheritdoc
      */
-    function getState()
+    function setServiceLevel($serviceLevel)
     {
 
-        return $this->state;
+        $this->serviceLevel = $serviceLevel;
     }
 
     /**
