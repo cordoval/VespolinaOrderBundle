@@ -62,8 +62,8 @@ class OrderDocumentCreateTest extends WebTestCase
         //Item data
         $salesOrderItem1 = $salesOrderManager->createItem($salesOrder);
 
-        $productA = $this->getMockForAbstractClass('Vespolina\ProductBundle\Model\Product');
-        $productB = $this->getMockForAbstractClass('Vespolina\ProductBundle\Model\Product');
+        $productA = $this->getMockForAbstractClass('Vespolina\ProductBundle\Model\Product', array('Vespolina\ProductBundle\Document\ProductIdentifierSet'));
+        $productB = $this->getMockForAbstractClass('Vespolina\ProductBundle\Model\Product', array('Vespolina\ProductBundle\Document\ProductIdentifierSet'));
 
         $salesOrderItem1->setProduct($productA);
         $salesOrderItem1->setOrderedQuantity(10);
